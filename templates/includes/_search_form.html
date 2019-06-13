@@ -1,0 +1,41 @@
+{% include 'includes/_messages.html' %}
+
+<form class="form-inline justify-content-center" action="/" method="POST">
+  <div class="form-group mx-sm-3 mb-5">
+    <input name="feed_url" type="text" class="form-control" placeholder="Enter RSS feed URL">
+  </div>
+  <button type="submit" class="btn btn-warning mb-5">Go</button>
+</form>
+
+{% if context and context.data[0].entries | length %}
+
+
+<h2 class="mb-3">{{ context.data[0]['feed']['title'] }}</h2>
+<h3 class="mb-5">{{ context.data[0].feed.subtitle }}</h3>
+
+{% if current_user.is_authenticated %}
+<form action="/feed/add" method="POST" class="mb-5">
+<input type="hidden" name="feed_url" value="{{ context.feed_url }}">
+<button class="btn btn-outline-warning btn-block">Add to your feed</button>
+</form>
+{% endif %}
+
+
+{% for item in context.data[0].entries %}
+<div class="card mb-5">
+  <div class="card-header bg-danger text-light">
+    {{ item.published }}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ item.title }}</h5>
+    <p class="card-text">{{ item.summary | safe }}</p>
+    <a href="{{ item.link }}" class="btn btn-outline-secondary" target="_blank">Read more</a>
+  </div>
+</div>
+{% endfor %}
+
+{% else %}
+
+<h2 class="text-center">No data</h2>
+
+{% endif %}

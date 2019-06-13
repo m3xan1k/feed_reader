@@ -1,0 +1,50 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+<h1 class="text-center mb-5">Feed Reader</h1>
+
+{% include 'includes/_messages.html' %}
+
+{% if feeds and feeds | length %}
+
+{% for feed in feeds %}
+
+<h2 class="mb-3">{{ feed.feed.title }}</h2>
+<h3 class="mb-5">{{ feed.feed.subtitle }}</h3>
+
+<form action="/feed/edit" method="GET" class="mb-5">
+<input type="hidden" name="feed_url" value="{{ feed.feed.title_detail.base }}">
+<button class="btn btn-warning btn-block">Edit this subscription</button>
+</form>
+
+<form action="/feed/delete" method="POST" class="mb-5">
+<input type="hidden" name="feed_url" value="{{ feed.feed.title_detail.base }}">
+<button class="btn btn-outline-danger btn-block">Remove from your feed</button>
+</form>
+
+
+{% for item in feed.entries %}
+<div class="card mb-5">
+  <div class="card-header bg-danger text-light">
+    {{ item.published }}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ item.title }}</h5>
+    <p class="card-text">{{ item.summary | safe }}</p>
+    <a href="{{ item.link }}" class="btn btn-outline-secondary" target="_blank">Read more</a>
+  </div>
+</div>
+{% endfor %}
+
+{% endfor %}
+
+{% else %}
+
+<h2 class="text-center mb-4">Your feed is empty, you can add RSS streams here</h2>
+
+{% include 'includes/_search_form.html' %}
+
+{% endif %}
+
+{% endblock content %}

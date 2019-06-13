@@ -1,0 +1,16 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+{% include 'includes/_messages.html' %}
+
+<h2 class="text-center mb-5">Edit your subscription</h2>
+
+<form action="/feed/edit?old_url={{ url }}" method="POST" class="mb-3">
+  <div class="form-group mb-5">
+    <input name="feed_url" type="text" class="form-control" value="{{ url }}">
+  </div>
+  <button type="submit" class="btn btn-warning mb-5 btn-block">Submit changes</button>
+</form>
+
+{% endblock content %}

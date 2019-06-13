@@ -1,0 +1,18 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<h1 class="text-center mb-5">Feed Reader Login</h1>
+
+{% include 'includes/_messages.html' %}
+
+<form action="/login" method="post" class="text-center mb-5 px-5">
+    <div class="form-group">
+        {{ form.username(class_="form-control", placeholder="Username") }}
+    </div>
+    <div class="form-group">
+        {{ form.password(class_="form-control", placeholder="Password") }}
+    </div>
+    <button type="submit" class="btn btn-outline-secondary">Submit Login</button>
+</form>
+
+{% endblock content %}
